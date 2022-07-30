@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "554254545418",
+    "project_id": "notevault-flutter-app",
+    "storage_bucket": "notevault-flutter-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:554254545418:android:12cbdb5f82008097cc25f3",
+        "android_client_info": {
+          "package_name": "dev.egehangur.notevault"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "554254545418-tcths3ngh2u9nmrfs11d6qpk327m2hs0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgew8F2CmxfgVOY6Zp3DYAU2fQ75c_N6g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "554254545418-tcths3ngh2u9nmrfs11d6qpk327m2hs0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
