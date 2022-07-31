@@ -3,7 +3,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:notevault/firebase_options.dart';
 import 'package:notevault/views/login_view.dart';
+import 'package:notevault/views/notes_view.dart';
 import 'package:notevault/views/register_view.dart';
+import 'package:notevault/views/verify_email_view.dart';
+
+import 'dart:developer' as devtools show log;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,6 +17,10 @@ void main() {
       primarySwatch: Colors.blue,
     ),
     home: const LandingPage(),
+    routes: {
+      "/login/": (context) => const LoginView(),
+      "/register/": (context) => const RegisterView()
+    },
   ));
 }
 
@@ -21,31 +29,27 @@ class LandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          title: const Text(
-        "Landing Page",
-      )),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-            options: DefaultFirebaseOptions.currentPlatform),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              final user = FirebaseAuth.instance.currentUser;
-
-              if (user?.emailVerified ?? false) {
-                print("User's email is verified");
+    return FutureBuilder(
+      future: Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform),
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.done:
+            final user = FirebaseAuth.instance.currentUser;
+            devtools.log(user.toString());
+            if (user != null) {
+              if (user.emailVerified) {
+                return const NotesView();
               } else {
-                print("User's email is not verified");
+                return const VerifyEmailView();
               }
-              print(user);
-              return const Text("Done");
-            default:
-              return const Text("Loading...");
-          }
-        },
-      ),
+            } else {
+              return const LoginView();
+            }
+          default:
+            return const CircularProgressIndicator.adaptive();
+        }
+      },
     );
   }
 }
