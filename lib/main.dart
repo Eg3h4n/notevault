@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:notevault/constants/routes.dart';
 import 'package:notevault/firebase_options.dart';
 import 'package:notevault/views/login_view.dart';
 import 'package:notevault/views/notes_view.dart';
@@ -18,9 +19,9 @@ void main() {
     ),
     home: const LandingPage(),
     routes: {
-      "/login/": (context) => const LoginView(),
-      "/register/": (context) => const RegisterView(),
-      "/notes/": (context) => const NotesView()
+      loginRoute: (context) => const LoginView(),
+      registerRoute: (context) => const RegisterView(),
+      notesRoute: (context) => const NotesView()
     },
   ));
 }

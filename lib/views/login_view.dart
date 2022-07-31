@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import "dart:developer";
 
+import 'package:notevault/constants/routes.dart';
+
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
 
@@ -64,7 +66,7 @@ class _LoginViewState extends State<LoginView> {
                     .then((value) {
                   if (value.user?.emailVerified ?? false) {
                     Navigator.of(context)
-                        .pushNamedAndRemoveUntil("/notes/", (route) => false);
+                        .pushNamedAndRemoveUntil(notesRoute, (route) => false);
                   }
                 });
               } on FirebaseAuthException catch (e) {
@@ -83,7 +85,7 @@ class _LoginViewState extends State<LoginView> {
           TextButton(
               onPressed: () {
                 Navigator.of(context)
-                    .pushNamedAndRemoveUntil("/register/", (route) => false);
+                    .pushNamedAndRemoveUntil(registerRoute, (route) => false);
               },
               child: const Text("Don't have an account? Register here!"))
         ]));
