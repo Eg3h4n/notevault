@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import 'dart:developer';
 // lib imports
 import 'package:notevault/constants/routes.dart';
+import 'package:notevault/utilities/show_error_dialog.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
@@ -57,21 +56,29 @@ class _RegisterViewState extends State<RegisterView> {
           ),
           TextButton(
             onPressed: () async {
+              // Due to flutter's "Do not use buildcontexts across async gaps" warning we assign the navigator before awaiting
+              final navigator = Navigator.of(context);
               final email = _email.text;
               final password = _password.text;
               try {
-                final userCredentials = await FirebaseAuth.instance
-                    .createUserWithEmailAndPassword(
-                        email: email, password: password);
-                log(userCredentials.toString());
+                await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                    email: email, password: password);
+                final user = FirebaseAuth.instance.currentUser;
+                await user?.sendEmailVerification();
+                navigator.pushNamed(verifyEmailRoute);
               } on FirebaseAuthException catch (e) {
                 e.code == "weak-password"
-                    ? log("weak password")
+                    ? await showErrorDialog(context, "Password is too weak!")
                     : e.code == "email-already-in-use"
-                        ? log("email already in use")
+                        ? await showErrorDialog(
+                            context, "Email already exists...")
                         : e.code == "invalid-email"
-                            ? log("invalid email")
-                            : log("something went wrong");
+                            ? await showErrorDialog(
+                                context, "Please enter a valid email.")
+                            : await showErrorDialog(context,
+                                "Authentication failed due to ${e.code}");
+              } catch (e) {
+                await showErrorDialog(context, e.toString());
               }
             },
             child: const Text("Register"),

@@ -16,6 +16,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
     return Scaffold(
       appBar: AppBar(title: const Text("Email Verification")),
       body: Column(children: [
+        const Text("A verification email is sent to your email address!"),
         const Text("Please verify your email"),
         TextButton(
             onPressed: () async {
@@ -23,7 +24,8 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
 
               await user?.sendEmailVerification();
             },
-            child: const Text("Send email verification")),
+            child: const Text(
+                "Did not recieve the verification email? Click here to receive another one!")),
         TextButton(
             onPressed: () {
               Navigator.of(context)

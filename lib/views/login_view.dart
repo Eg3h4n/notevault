@@ -66,6 +66,8 @@ class _LoginViewState extends State<LoginView> {
                   if (value.user?.emailVerified ?? false) {
                     Navigator.of(context)
                         .pushNamedAndRemoveUntil(notesRoute, (route) => false);
+                  } else {
+                    Navigator.of(context).pushNamed(verifyEmailRoute);
                   }
                 });
               } on FirebaseAuthException catch (e) {
