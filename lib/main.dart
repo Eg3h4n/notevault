@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+// lib imports
 import 'package:notevault/constants/routes.dart';
 import 'package:notevault/firebase_options.dart';
 import 'package:notevault/views/login_view.dart';
