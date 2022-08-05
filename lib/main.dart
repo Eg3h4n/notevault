@@ -10,7 +10,7 @@ import 'package:notevault/views/verify_email_view.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
-    title: 'Flutter Demo',
+    title: 'Note Vault',
     theme: ThemeData(
       primarySwatch: Colors.blue,
     ),
