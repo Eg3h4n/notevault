@@ -8,8 +8,12 @@ import 'package:notevault/services/crud/crud_exceptions.dart';
 class NotesService {
   Database? _db;
 
-  Future<DatabaseNote> updateNote(
-      {required DatabaseNote note, required String text}) async {
+  List<DatabaseNote> _notes = [];
+
+  Future<DatabaseNote> updateNote({
+    required DatabaseNote note,
+    required String text,
+  }) async {
     final db = _getDataBaseOrThrow();
 
     await getNote(id: note.id);
@@ -162,7 +166,7 @@ class NotesService {
       await db.execute(createNoteTable);
     } on MissingPlatformDirectoryException {
       throw UnableToGetDocumentsDirectory();
-    } catch (e) {}
+    }
   }
 
   Future<void> close() async {
