@@ -161,7 +161,7 @@ class NotesService {
       whereArgs: [email.toLowerCase()],
     );
     if (checkResults.isEmpty) {
-      throw CouldNotFindUser;
+      throw CouldNotFindUser();
     } else {
       return DatabaseUser.fromRow(checkResults.first);
     }
@@ -214,7 +214,7 @@ class NotesService {
     try {
       await open();
     } on DatabaseAlreadyOpenException {
-      print("database is already i=open");
+      print("database is already open");
     }
   }
 
@@ -314,12 +314,12 @@ const userIdColumn = "user_id";
 const textColumn = "note_text";
 const isSyncedWithCloudColumn = "is_synced_with_cloud";
 
-const createUserTable = '''CREATE TABLE IF NOT EXISTS user (
+const createUserTable = '''CREATE TABLE IF NOT EXISTS "user" (
 	"id"	INTEGER NOT NULL,
 	"email"	TEXT NOT NULL UNIQUE,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );''';
-const createNoteTable = '''CREATE TABLE IF NOT EXISTS notes (
+const createNoteTable = '''CREATE TABLE IF NOT EXISTS "notes" (
 	"id"	INTEGER NOT NULL,
 	"user_id"	INTEGER NOT NULL,
 	"note_text"	TEXT,
