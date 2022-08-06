@@ -314,12 +314,12 @@ const userIdColumn = "user_id";
 const textColumn = "note_text";
 const isSyncedWithCloudColumn = "is_synced_with_cloud";
 
-const createUserTable = '''CREATE TABLE "user" IF NOT EXISTS (
+const createUserTable = '''CREATE TABLE IF NOT EXISTS user (
 	"id"	INTEGER NOT NULL,
 	"email"	TEXT NOT NULL UNIQUE,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );''';
-const createNoteTable = '''CREATE TABLE "notes" IF NOT EXISTS(
+const createNoteTable = '''CREATE TABLE IF NOT EXISTS notes (
 	"id"	INTEGER NOT NULL,
 	"user_id"	INTEGER NOT NULL,
 	"note_text"	TEXT,
