@@ -36,6 +36,12 @@ class _NotesViewState extends State<NotesView> {
       appBar: AppBar(
         title: const Text("Note Vault"),
         actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(newNoteRoute);
+            },
+            icon: const Icon(Icons.add),
+          ),
           PopupMenuButton<MenuAction>(
             onSelected: (value) async {
               // Due to flutter's "Do not use buildcontexts across async gaps" warning we assign the navigator before awaiting
