@@ -4,6 +4,8 @@ import 'package:notevault/constants/routes.dart';
 import 'package:notevault/enums/menu_action.dart';
 import 'package:notevault/services/auth/auth_service.dart';
 import 'package:notevault/services/crud/notes_service.dart';
+import 'package:notevault/utilities/dialogs/logout_dialog.dart';
+import 'package:notevault/views/notes/notes_list_view.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({Key? key}) : super(key: key);
@@ -76,19 +78,11 @@ class _NotesViewState extends State<NotesView> {
                     case ConnectionState.active:
                       if (snapshot.hasData) {
                         final allNotes = snapshot.data as List<DatabaseNote>;
-                        return ListView.builder(
-                          itemCount: allNotes.length,
-                          itemBuilder: (context, index) {
-                            final note = allNotes[index];
-                            return ListTile(
-                                title: Text(
-                              note.text,
-                              maxLines: 1,
-                              softWrap: true,
-                              overflow: TextOverflow.ellipsis,
-                            ));
-                          },
-                        );
+                        return NotesListView(
+                            notes: allNotes,
+                            onDeleteNote: (note) async {
+                              await _notesService.deleteNote(id: note.id);
+                            });
                       } else {
                         return const CircularProgressIndicator.adaptive();
                       }
@@ -104,27 +98,4 @@ class _NotesViewState extends State<NotesView> {
       ),
     );
   }
-}
-
-Future<bool> showLogOutDialog(BuildContext context) {
-  return showDialog<bool>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text("Log out"),
-          content: const Text("Are you sure you want to log out of NoteVault?"),
-          actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(false);
-                },
-                child: const Text("Cancel")),
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                },
-                child: const Text("Log out"))
-          ],
-        );
-      }).then((value) => value ?? false);
 }
