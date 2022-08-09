@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:notevault/constants/routes.dart';
 import 'package:notevault/services/auth/auth_service.dart';
 import 'package:notevault/views/login_view.dart';
-import 'package:notevault/views/notes/new_note_view.dart';
+import 'package:notevault/views/notes/create_update_note_view.dart';
 import 'package:notevault/views/notes/notes_view.dart';
 import 'package:notevault/views/register_view.dart';
 import 'package:notevault/views/verify_email_view.dart';
@@ -21,7 +21,7 @@ void main() {
       registerRoute: (context) => const RegisterView(),
       notesRoute: (context) => const NotesView(),
       verifyEmailRoute: (context) => const VerifyEmailView(),
-      newNoteRoute: (context) => const NewNoteView()
+      createOrUpdateNoteRoute: (context) => const CreateUpdateNoteView()
     },
   ));
 }
