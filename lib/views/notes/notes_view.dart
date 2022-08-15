@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 // lib imports
 import 'package:notevault/constants/routes.dart';
 import 'package:notevault/enums/menu_action.dart';
 import 'package:notevault/services/auth/auth_service.dart';
+import 'package:notevault/services/auth/bloc/auth_bloc.dart';
+import 'package:notevault/services/auth/bloc/auth_event.dart';
 import 'package:notevault/services/cloud/cloud_note.dart';
 import 'package:notevault/services/cloud/firebase_cloud_storage.dart';
 import 'package:notevault/utilities/dialogs/logout_dialog.dart';
@@ -40,16 +43,14 @@ class _NotesViewState extends State<NotesView> {
           ),
           PopupMenuButton<MenuAction>(
             onSelected: (value) async {
-              // Due to flutter's "Do not use buildcontexts across async gaps" warning we assign the navigator before awaiting
-              final navigator = Navigator.of(context);
+              // Due to flutter's "Do not use buildcontexts across async gaps" warning we assign the authbloc before awaiting
+              final authBloc = context.read<AuthBloc>();
               switch (value) {
                 case MenuAction.logout:
                   final shouldLogout = await showLogOutDialog(context);
 
                   if (shouldLogout) {
-                    await AuthService.firebase().logOut();
-                    navigator.pushNamedAndRemoveUntil(
-                        loginRoute, (route) => false);
+                    authBloc.add(const AuthEventLogOut());
                   }
                   break;
                 default:
