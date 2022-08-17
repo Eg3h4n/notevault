@@ -24,10 +24,6 @@ void main() {
       child: const LandingPage(),
     ),
     routes: {
-      loginRoute: (context) => const LoginView(),
-      registerRoute: (context) => const RegisterView(),
-      notesRoute: (context) => const NotesView(),
-      verifyEmailRoute: (context) => const VerifyEmailView(),
       createOrUpdateNoteRoute: (context) => const CreateUpdateNoteView()
     },
   ));
@@ -40,7 +36,9 @@ class LandingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<AuthBloc>().add(const AuthEventInitialize());
     return BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
-      if (state is AuthStateLoggedIn) {
+      if (state is AuthStateRegistering) {
+        return const RegisterView();
+      } else if (state is AuthStateLoggedIn) {
         return const NotesView();
       } else if (state is AuthStateNeedsVerification) {
         return const VerifyEmailView();
