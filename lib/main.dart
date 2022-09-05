@@ -7,6 +7,7 @@ import 'package:notevault/services/auth/bloc/auth_bloc.dart';
 import 'package:notevault/services/auth/bloc/auth_event.dart';
 import 'package:notevault/services/auth/bloc/auth_state.dart';
 import 'package:notevault/services/auth/firebase_auth_provider.dart';
+import 'package:notevault/views/forgot_password_view.dart';
 import 'package:notevault/views/login_view.dart';
 import 'package:notevault/views/notes/create_update_note_view.dart';
 import 'package:notevault/views/notes/notes_view.dart';
@@ -52,6 +53,8 @@ class LandingPage extends StatelessWidget {
         return const VerifyEmailView();
       } else if (state is AuthStateLoggedOut) {
         return const LoginView();
+      } else if (state is AuthStateForgotPassword) {
+        return const ForgotPasswordView();
       } else {
         return const Scaffold(
           body: CircularProgressIndicator.adaptive(),
